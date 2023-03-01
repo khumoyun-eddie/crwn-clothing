@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  createUserDocumentFromAuth,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
@@ -26,21 +25,22 @@ const SignInForm = () => {
     e.preventDefault();
 
     try {
-      await signInAuthUserWithEmailAndPassword(email, password);
+       await signInAuthUserWithEmailAndPassword(email, password);
+      // setCurrentUser(user);
       setFormFields(defaultFormFields);
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("Cannot create user, email is already in use");
+      if (error.code === "auth/user-not-found") {
+        alert("Cannot find user, please check your");
+      } else if (error.code === "auth/wrong-password") {
+        alert("incorrect password for email");
       } else {
-        console.log("user creation error", error);
+        console.log(error);
       }
     }
   };
 
   const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup();
-
-    createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
   return (
     <div className='sign-in-container'>
@@ -50,7 +50,7 @@ const SignInForm = () => {
         <FormInput
           label='Email'
           type='email'
-          id='email'
+          id='email-sign-in'
           required
           name='email'
           onChange={handleChange}
@@ -60,7 +60,7 @@ const SignInForm = () => {
         <FormInput
           label='Password'
           type='password'
-          id='password'
+          id='password-sign-in'
           required
           name='password'
           onChange={handleChange}
@@ -73,7 +73,7 @@ const SignInForm = () => {
             type='button'
             onClick={logGoogleUser}
           >
-           Google Sign in
+            Google Sign in
           </Button>
         </div>
       </form>
