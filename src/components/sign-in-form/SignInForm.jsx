@@ -3,7 +3,7 @@ import {
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
-import Button from "../button/Button";
+import Button from "../Button/Button";
 import FormInput from "../form-input/FormInput";
 import "./sign-in-form.styles.scss";
 
