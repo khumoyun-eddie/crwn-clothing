@@ -1,11 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { getCategoriesAndDocuments } from "../utils/firebase/firebase.utils";
 
-export const ProductsContext = createContext({
+export const CategoriesContext = createContext({
   categories: {},
 });
 
-export const ProductsProvider = ({ children }) => {
+export const CategoriesProvider = ({ children }) => {
   const [categories, setCategories] = useState({});
 
   useEffect(() => {
@@ -18,8 +18,8 @@ export const ProductsProvider = ({ children }) => {
   const value = { categories };
 
   return (
-  <ProductsContext.Provider value={value}>
+  <CategoriesContext.Provider value={value}>
     {children}
-</ProductsContext.Provider>
+  </CategoriesContext.Provider>
 );
 };
